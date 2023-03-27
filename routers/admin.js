@@ -18,17 +18,12 @@ const adminAuth = (req, res, next)=>{
 }
 
 
-// -------------------------------------------------------
-// -----------------------TEST----------------------------
-// -------------------------------------------------------
-router.get(
-// router.post(
+router.post(
     '/login',
     (req, res)=>{
         // logs in as admin
         console.log("logging in as admin...");
-        // if (req.body.key === ADMIN_KEY) {
-        if (req.query.key === ADMIN_KEY) {
+        if (req.body.key === ADMIN_KEY) {
             req.session.admin = true;
             console.log("admin login successful.");
             res.status(201).json({status: 201, content: 'admin login successful.' });    
@@ -44,9 +39,7 @@ router.get(
 // adds authentication to all routes after it
 router.use( adminAuth );
 
-// -------------------------------------------------------
-// -----------------------TEST----------------------------
-// -------------------------------------------------------
+
 router.get(
     '/chats',
     async (req, res)=>{   
@@ -70,18 +63,14 @@ router.get(
 );
 
 
-// -------------------------------------------------------
-// -----------------------TEST----------------------------
-// -------------------------------------------------------
-router.get(
-// router.post(
+
+router.post(
     '/send/:sid',
     (req, res)=>{
     // sends a message to current user specified by 'sid' params
     console.log("Recieved message from admin...");
     let {sid} = req.params;
-    // let {message} = req.body;
-    let {message} = req.query;
+    let {message} = req.body;
 
     let knex = req.knex_object;
     knex.insert({sid, message, epoch_time : new Date().getTime(), is_admin : true})
@@ -99,9 +88,7 @@ router.get(
 );
 
 
-// -------------------------------------------------------
-// -----------------------TEST----------------------------
-// -------------------------------------------------------
+
 router.get(
     '/messages/:sid/:offsetTime',
     async (req, res)=>{
