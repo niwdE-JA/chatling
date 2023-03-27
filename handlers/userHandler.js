@@ -14,7 +14,7 @@ module.exports.initiateChat = (req, res)=>{
     res.status(201).json({status: 201, content: 'So far, so good.'});
 }
 
-module.exports.sendMessage = (req, res)=>{
+module.exports.sendMessageToAdmin = (req, res)=>{
     // sends a message to admin
     console.log("Recieved message from user...");
     let sid = req.sessionID;

@@ -1,13 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const {initiateChat, sendMessage, getMessages, closeChatSession} = require('../handlers/userHandler');
+const { initiateChat, sendMessageToAdmin, getMessages, closeChatSession } = require('../handlers/userHandler');
 
 
 // This file handles all '/livechat/user/*' routes.
 
 router.get('/initiate', initiateChat );
 
-router.post('/send', sendMessage );
+router.post('/send', sendMessageToAdmin );
 
 router.get('/messages/:offsetTime', getMessages );
 
