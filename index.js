@@ -20,8 +20,6 @@ const sessions_config =  sessions( {
     rolling: true,
     saveUninitialized: true/*true*/,
     cookie:{
-        // sameSite: (IS_PRODUCTION) ? 'none' : 'lax', // must be 'none' to enable cross-site delivery
-        // secure: (IS_PRODUCTION),
         maxAge: 24*60*60*1000,
         httpOnly: true/*true*/,
     },

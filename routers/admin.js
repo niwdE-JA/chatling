@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {loginAsAdmin, getActiveChats, sendMessageToUser, getMessagesBySid, } = require('../handlers/adminHandler');
+const {loginAsAdmin, getActiveChats, sendMessageToUser, getMessagesBySid, closeChatBySid, } = require('../handlers/adminHandler');
 
 // This file handles all '/livechat/admin/*' routes.
 
@@ -42,9 +42,7 @@ router.get(
 );
 
 router.get('/close/:sid',
-    (req, res)=>{
-        // closes chat of current user specified by 'sid' params
-    }
+    closeChatBySid
 );
 
 module.exports = router;

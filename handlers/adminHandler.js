@@ -21,7 +21,8 @@ module.exports.getActiveChats = async (req, res)=>{
     // lists all chats in active session(including their session IDs)
     try {
         let result = await knex.select().from('sessions').limit( 20 );
-        result = result.filter( item => !(item.sess.admin));
+        // sanitize query result by filtering away users who are admins, and by returning only sids of users
+        result = result.filter( item => !(item.sess.admin)).map( item =>{ return {sid: item.sid} } );
 
         console.log(result);
         res.status(201).json({status: 201, content: result });
@@ -73,4 +74,18 @@ module.exports.getMessagesBySid = async (req, res)=>{
 
     }
     
+}
+
+module.exports.closeChatBySid = (req, res)=>{
+    // closes chat of current user specified by 'sid' params
+    let {sid} = req.params;
+    knex.delete().from('sessions').where('sid', sid )
+        .then((result)=>{
+            console.log("Chat session closed successfully.");
+            res.status(201).json({status: 201, content: "Chat session closed successfully."} );
+        })
+        .catch((err)=>{
+            console.log(err);
+            res.status(401).json({status: 401, content: 'Error: There was an error closing the chats.', err});        
+        });
 }
